@@ -22,6 +22,11 @@ class Blockchain{
             const block = chain[i];
             const last = chain[i-1].hash;
             const { nonce, difficulty, timestamp, lasthash,hash,data} = block;
+            const lastDiff = chain[i-1].difficulty;
+
+            if(Math.abs(difficulty - lastDiff)>1)
+                return false;
+
             if(lasthash!==last)
                 return false;
             const h = cryptohash(timestamp,data,lasthash,nonce,difficulty)
