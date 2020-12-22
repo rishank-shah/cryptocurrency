@@ -1,8 +1,13 @@
+const DIFF = 2;
+
 const GENESIS_BLOCK_DATA = {
     timestamp: Date.now(),
     lasthash: '0000000000000000000000000000000000000000000000000000000000000000',
     hash: '0000000000000000000000000000000000000000000000000000000000000000',
-    data: []
+    data: [],
+    difficulty:DIFF,
+    nonce:0
 };
+
 
 module.exports = {GENESIS_BLOCK_DATA};

@@ -21,10 +21,10 @@ class Blockchain{
         for(let i=1;i<chain.length;i++){
             const block = chain[i];
             const last = chain[i-1].hash;
-            const { timestamp, lasthash,hash,data} = block;
+            const { nonce, difficulty, timestamp, lasthash,hash,data} = block;
             if(lasthash!==last)
                 return false;
-            const h = cryptohash(timestamp,data,lasthash)
+            const h = cryptohash(timestamp,data,lasthash,nonce,difficulty)
             if(h !== hash)
                 return false;
         }
