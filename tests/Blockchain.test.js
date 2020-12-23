@@ -1,4 +1,4 @@
-const Blockchain = require('./Blockchain')
+const Blockchain = require('../blockchain/Blockchain')
 const Block = require('../block/Block')
 const { cryptohash } = require("../crypto/cryptohash");
 

@@ -9,6 +9,6 @@ const GENESIS_BLOCK_DATA = {
     nonce:0
 };
 
-const RATE = 1000;
+const RATE = 2000;
 
 module.exports = {GENESIS_BLOCK_DATA, RATE};
