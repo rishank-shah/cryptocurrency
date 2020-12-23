@@ -1,9 +1,9 @@
 const DIFF = 2;
 
 const GENESIS_BLOCK_DATA = {
-    timestamp: Date.now(),
-    lasthash: '0000000000000000000000000000000000000000000000000000000000000000',
-    hash: '0000000000000000000000000000000000000000000000000000000000000000',
+    timestamp: 1,
+    lasthash: '0',
+    hash: '0',
     data: [],
     difficulty:DIFF,
     nonce:0

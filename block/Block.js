@@ -15,7 +15,7 @@ class Block{
     static difficulty({block,timestamp}){
         const {difficulty} = block;
         if(difficulty<1) 
-            return 2;
+            return 1;
         const diff = timestamp - block.timestamp;
         if(diff>RATE)
             return difficulty - 1;

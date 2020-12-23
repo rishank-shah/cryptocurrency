@@ -6,12 +6,14 @@
   "scripts": {
     "test": "jest --watchAll",
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "peer": "cross-env PEER_PORT='true' nodemon app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "jest": "^26.6.3",
     "nodemon": "^2.0.6"
   },
@@ -21,6 +23,7 @@
     "express": "^4.17.1",
     "hex-to-binary": "^1.0.1",
     "morgan": "^1.10.0",
-    "redis": "^3.0.2"
+    "redis": "^3.0.2",
+    "request": "^2.88.2"
   }
 }
