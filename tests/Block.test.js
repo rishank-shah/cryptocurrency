@@ -73,9 +73,9 @@ describe('Block',()=>{
         it('decrease for slow mined',()=>{
             expect(Block.difficulty({block,timestamp:block.timestamp + RATE + 100})).toEqual(block.difficulty-1);
         })
-        it('lower limit of 2',()=>{
+        it('lower limit of 1',()=>{
             block.difficulty = -1;
-            expect(Block.difficulty({block})).toEqual(2)
+            expect(Block.difficulty({block})).toEqual(1)
         })
     })
 });

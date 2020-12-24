@@ -1,3 +1,5 @@
+const START_BALANCE = 1
+
 const DIFF = 2;
 
 const GENESIS_BLOCK_DATA = {
@@ -11,4 +13,4 @@ const GENESIS_BLOCK_DATA = {
 
 const RATE = 2000;
 
-module.exports = {GENESIS_BLOCK_DATA, RATE};
+module.exports = {GENESIS_BLOCK_DATA, RATE, START_BALANCE};

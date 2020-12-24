@@ -9,6 +9,9 @@
     "dev": "nodemon app.js",
     "peer": "cross-env PEER_PORT='true' nodemon app.js"
   },
+  "jest":{
+    "testEnvironment":"node"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
