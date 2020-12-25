@@ -29,15 +29,33 @@ class Transaction{
         const outputTotal = Object.values(outputMap).reduce((total,outputAmount)=> total+outputAmount);
 
         if(amount !== outputTotal){
-            console.log(`Invalid transaction from ${address}`)
+            //console.log(`Invalid transaction from ${address}`)
             return false;
         }
 
         if(!verifySig({publicKey:address,data:outputMap,signature})){
-            console.log(`Invalid signature from ${address}`)
+            //console.log(`Invalid signature from ${address}`)
             return false;
         }
         return true;
+    }
+
+    updateTransaction({sWallet,amount,receiver}){
+        if(amount > this.outputMap[sWallet.publicKey]){
+            throw new Error('Amount exceeds Balance');
+        }
+
+        if(!this.outputMap[receiver]){
+            this.outputMap[receiver] = amount;
+        }
+        else{
+            this.outputMap[receiver] += amount;
+        }
+        this.outputMap[sWallet.publicKey] -= amount;
+        this.input = this.createInput({
+            sWallet,
+            outputMap:this.outputMap
+        }); 
     }
 }
 
