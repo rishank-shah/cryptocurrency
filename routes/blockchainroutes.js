@@ -9,7 +9,7 @@ const TransactionPool = require('../transaction/TransactionPool')
 const blockchain = new Blockchain();
 const wallet = new Wallet(); 
 const transactionPool = new TransactionPool();
-const pubsub = new Pubsub({blockchain});
+const pubsub = new Pubsub({blockchain,transactionPool});
 
 function block_instance(){ 
      return blockchain
@@ -28,14 +28,41 @@ router.post('/mine-block',(req,res)=>{
 
 router.post('/make-transaction',(req,res)=>{
      const {amount,receiver} = req.body
-     const transaction = wallet.createTransaction({
-          amount,
-          receiver
-     })
+     if(amount < 0){
+          return res.status(400).json({
+               error:'Negative amount'
+          })
+     }
+     let transaction = transactionPool.existTransact({address:wallet.publicKey});
+     try{
+          if(transaction){
+               transaction.updateTransaction({
+                    sWallet:wallet,
+                    amount,
+                    receiver
+               })
+          }
+          else{
+               transaction = wallet.createTransaction({
+                    amount,
+                    receiver
+               })
+          }
+     }
+     catch(error){
+          return res.status(400).json({
+               error: error.message
+          })
+     }
      transactionPool.setTransaction(transaction)
+     pubsub.broadcastTransaction(transaction);
      res.json({
           transaction
      });
+})
+
+router.get('/transact-pool-map',(req,res)=>{
+     res.json(transactionPool.transactionMap)
 })
 
 module.exports = router
