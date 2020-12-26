@@ -16,6 +16,9 @@ class TransactionPool{
         this.transactionMap[transaction.id] = transaction;
     }
 
+    replaceMap(pool){
+        this.transactionMap = pool;
+    }
 }
 
 module.exports = TransactionPool;

@@ -15,6 +15,10 @@ function block_instance(){
      return blockchain
 }
 
+function transactionPool_instance(){ 
+     return transactionPool
+}
+
 router.get('/blocks',(_req,res)=>{
      res.json(blockchain.chain);
 });
@@ -67,3 +71,4 @@ router.get('/transact-pool-map',(req,res)=>{
 
 module.exports = router
 module.exports.block_instance = block_instance;
+module.exports.transactionPool_instance = transactionPool_instance;
