@@ -1,4 +1,4 @@
-const START_BALANCE = 1
+const START_BALANCE = 1000
 
 const DIFF = 2;
 
@@ -6,7 +6,7 @@ const REWARDINPUT = {
     address: 'reward'
 };
 
-const MININGREWARD = 0.05;
+const MININGREWARD = 5;
 
 const GENESIS_BLOCK_DATA = {
     timestamp: 1,

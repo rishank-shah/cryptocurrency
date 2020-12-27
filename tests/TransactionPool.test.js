@@ -60,7 +60,7 @@ describe('TransactionPool',()=>{
 
     describe('clearTransactions()',()=>{
         it('clears transactions',()=>{
-            transactionPool.clearTransactions();
+            transactionPool.clear();
 
             expect(transactionPool.transactionMap).toEqual({});
         })

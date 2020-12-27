@@ -4,12 +4,13 @@ const Blockchain = require('../blockchain/Blockchain')
 const Wallet = require('../wallet/Wallet')
 const Pubsub = require('../pubsub/Pubsub')
 const TransactionPool = require('../transaction/TransactionPool')
-
+const TransactionMiner = require('../transaction/TransactionMiner')
 
 const blockchain = new Blockchain();
 const wallet = new Wallet(); 
 const transactionPool = new TransactionPool();
 const pubsub = new Pubsub({blockchain,transactionPool});
+const transactionMiner = new TransactionMiner({blockchain,transactionPool,wallet,pubsub})
 
 function block_instance(){ 
      return blockchain
@@ -67,6 +68,11 @@ router.post('/make-transaction',(req,res)=>{
 
 router.get('/transact-pool-map',(req,res)=>{
      res.json(transactionPool.transactionMap)
+})
+
+router.get('/mine-transaction',(req,res)=>{
+     transactionMiner.mineTransactions();
+     res.redirect('/blocks')
 })
 
 module.exports = router

@@ -1,4 +1,4 @@
-
+const Transaction = require('./Transaction')
 
 class TransactionMiner{
     constructor({blockchain,transactionPool,wallet,pubsub}){
@@ -9,7 +9,11 @@ class TransactionMiner{
     }
 
     mineTransactions(){
-    
+        const validTransactions = this.transactionPool.validTransaction()
+        validTransactions.push(Transaction.rewardTransaction({minerWallet:this.wallet}))
+        this.blockchain.addBlock({data:validTransactions})
+        this.pubsub.broadcast()
+        this.transactionPool.clear();
     }    
 }
 

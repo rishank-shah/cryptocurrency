@@ -25,7 +25,7 @@ class TransactionPool{
         return Object.values(this.transactionMap).filter(transaction => Transaction.isValidTransaction(transaction))
     }
 
-    clearTransactions(){
+    clear(){
         this.transactionMap = {}
     }
 
