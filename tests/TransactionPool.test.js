@@ -30,4 +30,30 @@ describe('TransactionPool',()=>{
             })).toBe(transaction)
         })
     })
+
+    describe('validTransaction()',()=>{
+        let validTransactions;
+
+        beforeEach(()=>{
+            validTransactions = [];
+            for (let i = 0; i < 10; i++) {
+                transaction = new Transaction({
+                    sWallet,
+                    receiver: 'receive',
+                    amount: 0.0005
+                })
+                if(i%3 === 0){
+                    transaction.input.amount = 99999;
+                }else{
+                    validTransactions.push(transaction);
+                }
+                transactionPool.setTransaction(transaction)
+            }
+        })
+
+        it('returns valid Transaction',()=>{
+            expect(transactionPool.validTransaction()).toEqual(validTransactions)
+        })
+
+    })
 })
