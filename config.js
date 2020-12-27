@@ -2,6 +2,12 @@ const START_BALANCE = 1
 
 const DIFF = 2;
 
+const REWARDINPUT = {
+    address: 'reward'
+};
+
+const MININGREWARD = 0.05;
+
 const GENESIS_BLOCK_DATA = {
     timestamp: 1,
     lasthash: '0',
@@ -13,4 +19,4 @@ const GENESIS_BLOCK_DATA = {
 
 const RATE = 2000;
 
-module.exports = {GENESIS_BLOCK_DATA, RATE, START_BALANCE};
+module.exports = {GENESIS_BLOCK_DATA, RATE, START_BALANCE,REWARDINPUT,MININGREWARD};
