@@ -67,13 +67,23 @@ router.post('/make-transaction',(req,res)=>{
      });
 })
 
-router.get('/transact-pool-map',(req,res)=>{
+router.get('/transact-pool-map',(_req,res)=>{
      res.json(transactionPool.transactionMap)
 })
 
-router.get('/mine-transaction',(req,res)=>{
+router.get('/mine-transaction',(_req,res)=>{
      transactionMiner.mineTransactions();
      res.redirect('/blocks')
+})
+
+router.get('/wallet-info',(req,res)=>{
+     res.json({
+          address : wallet.publicKey,
+          balance : Wallet.calculateBalance({
+               chain:blockchain.chain,
+               address:wallet.publicKey
+          })
+     })
 })
 
 module.exports = router

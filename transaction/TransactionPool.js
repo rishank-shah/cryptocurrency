@@ -32,9 +32,16 @@ class TransactionPool{
     clearBlockchainTransaction({chain}){
         for (let i = 1; i < chain.length; i++) {
             const block = chain[i];
-            for(let transaction of block.data){
+            if(block.data.length === 1){
+                transaction = block.data;
                 if(this.transactionMap[transaction.id]){
                     delete this.transactionMap[transaction.id];
+                }
+            }else{
+                for(let transaction of block.data){
+                    if(this.transactionMap[transaction.id]){
+                        delete this.transactionMap[transaction.id];
+                    }
                 }
             }
         }
