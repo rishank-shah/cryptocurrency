@@ -35,7 +35,7 @@ class Blockchain{
         }
         return true;
     }
-    replaceChain(ch){
+    replaceChain(ch,onSuccess){
         if(ch.length <= this.chain.length){
             console.error('[ERROR] New chain must be long')
             return;
@@ -44,6 +44,7 @@ class Blockchain{
             console.error('[ERROR] New chain must be valid')
             return;
         }
+        if(onSuccess) onSuccess();
         console.log('[INFO] Chain is replacing')
         this.chain = ch
     }
