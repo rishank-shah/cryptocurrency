@@ -50,7 +50,8 @@ router.post('/make-transaction',(req,res)=>{
           else{
                transaction = wallet.createTransaction({
                     amount,
-                    receiver
+                    receiver,
+                    chain:blockchain.chain
                })
           }
      }

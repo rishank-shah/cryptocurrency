@@ -1,6 +1,8 @@
 const Wallet = require('../wallet/Wallet')
 const {verifySig} = require('../crypto/cryptokey')
 const Transaction  = require('../transaction/Transaction')
+const Blockchain = require('../blockchain/Blockchain')
+const {START_BALANCE} = require('../config')
 
 describe('Wallet',()=>{
     let wallet;
@@ -75,5 +77,68 @@ describe('Wallet',()=>{
                 expect(transaction.outputMap[receiver]).toEqual(amount);
             })
         })
+
+        describe('chain is passed',()=>{
+            it('call Wallet.calculateBalance()',()=>{
+                const calculateBalanceMock = jest.fn()
+                const orig = Wallet.calculateBalance
+                Wallet.calculateBalance = calculateBalanceMock
+                wallet.createTransaction({
+                    receiver:'saas',
+                    amount:50,
+                    chain: new Blockchain().chain
+                })
+                expect(calculateBalanceMock).toHaveBeenCalled();
+                Wallet.calculateBalance = orig;
+            });
+        })
     });
+
+    describe('calculateBalance()',()=>{
+        let blockchain;
+
+        beforeEach(()=>{
+            blockchain = new Blockchain();
+        })
+
+        describe('no outputs for wallet',()=>{
+            it('returns starting balance',()=>{
+                expect(Wallet.calculateBalance({
+                    chain:blockchain.chain,
+                    address: wallet.publicKey
+                })).toEqual(START_BALANCE)
+            })
+        })
+
+        describe('outputs are present',()=>{
+            let transaction1, transaction2;
+
+            beforeEach(()=>{
+                transaction1 = new Wallet().createTransaction({
+                    amount:50,
+                    receiver:wallet.publicKey
+                })
+
+                transaction2 =  new Wallet().createTransaction({
+                    amount:100,
+                    receiver:wallet.publicKey
+                })
+                blockchain.addBlock({
+                    data:[transaction1,transaction2]
+                })
+            })
+
+            it('add all ouputs to wallet balance',()=>{
+                expect(Wallet.calculateBalance({
+                    chain:blockchain.chain,
+                    address:wallet.publicKey
+                }))
+                .toEqual(
+                    START_BALANCE + 
+                    transaction1.outputMap[wallet.publicKey] + 
+                    transaction2.outputMap[wallet.publicKey]
+                )
+            })
+        })
+    })
 });
