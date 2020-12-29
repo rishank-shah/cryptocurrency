@@ -113,6 +113,7 @@ describe('Blockchain',()=>{
                 expect(error).toHaveBeenCalled();
             })
         })
+
         describe('chain is long',()=>{
             beforeEach(()=>{
                 newchain.addBlock({data:'data1'})
@@ -144,6 +145,19 @@ describe('Blockchain',()=>{
                 })
             })
         })
+
+        describe('the validTransaction flag is set',()=>{
+            it('calls validTransactionData()',()=>{
+                const validateTransactionMock = jest.fn()
+
+                blockchain.validTransactionData = validateTransactionMock
+                newchain.addBlock({
+                    data:'moredata'
+                })
+                blockchain.replaceChain(newchain.chain,true)
+                expect(validateTransactionMock).toHaveBeenCalled();
+            })
+        })
     })
 
     describe('validTransactionData()',()=>{
@@ -171,6 +185,17 @@ describe('Blockchain',()=>{
         })
 
         describe('transaction data is invalid',()=>{
+            beforeEach(()=>{
+                wallet = new Wallet()
+                transaction = wallet.createTransaction({
+                    amount:50,
+                    receiver:'receive'
+                })
+                rewardTransaction = Transaction.rewardTransaction({
+                    minerWallet:wallet
+                })
+            })
+
             describe('transaction data has multiple rewards',()=>{
                 it('returns false and logs error',()=>{
                     newchain.addBlock({
@@ -206,16 +231,38 @@ describe('Blockchain',()=>{
             
             describe('transaction data has malformed input',()=>{
                 it('returns false and logs error',()=>{
-    
+                    wallet.balance = 9000;
+                    const wrongoutputMap = {
+                        [wallet.publicKey]:8900,
+                        receive : 100
+                    }
+                    const wrongTransaction = {
+                        input:{
+                            timestamp:Date.now(),
+                            amount: wallet.balance,
+                            address: wallet.publicKey,
+                            signature: wallet.sign(wrongoutputMap)
+                        },
+                        outputMap:wrongoutputMap
+                    }
+
+                    newchain.addBlock({
+                        data:[wrongTransaction,rewardTransaction]
+                    })
+                    expect(blockchain.validTransactionData({chain:newchain.chain})).toBe(false)
+                    expect(error).toHaveBeenCalled()
                 })
             })
     
             describe('transaction data has multiple same data',()=>{
                 it('returns false and logs error',()=>{
-    
+                    newchain.addBlock({
+                        data:[transaction,transaction,transaction,rewardTransaction]
+                    })
+                    expect(blockchain.validTransactionData({chain:newchain.chain})).toBe(false)
+                    expect(error).toHaveBeenCalled()
                 })
             })
         })
-
     })
 }) 
