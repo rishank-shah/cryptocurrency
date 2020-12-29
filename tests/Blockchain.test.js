@@ -1,11 +1,15 @@
 const Blockchain = require('../blockchain/Blockchain')
 const Block = require('../block/Block')
 const { cryptohash } = require("../crypto/cryptohash");
+const Wallet = require('../wallet/Wallet');
+const Transaction = require('../transaction/Transaction');
 
 describe('Blockchain',()=>{
-    let blockchain,newchain,cha;
+    let blockchain,newchain,cha,error;
 
     beforeEach(()=>{
+        error = jest.fn();
+        global.console.error = error;
         blockchain = new Blockchain();
         newchain = new Blockchain();
         cha = blockchain.chain;
@@ -87,12 +91,10 @@ describe('Blockchain',()=>{
     });
 
     describe('replaceChain()',()=>{
-        let error,log;
+        let log;
         
         beforeEach(()=>{
-            error = jest.fn();
             log = jest.fn();
-            global.console.error = error;
             global.console.log = log;
         })
         
@@ -143,4 +145,77 @@ describe('Blockchain',()=>{
             })
         })
     })
-})
+
+    describe('validTransactionData()',()=>{
+        let transaction, rewardTransaction,wallet;
+        beforeEach(()=>{
+            wallet = new Wallet()
+            transaction = wallet.createTransaction({
+                amount:50,
+                receiver:'receive'
+            })
+            rewardTransaction = Transaction.rewardTransaction({
+                minerWallet:wallet
+            })
+        })
+
+        describe('transaction data is valid',()=>{
+            it('returns true',()=>{
+                newchain.addBlock({
+                    data:[transaction,rewardTransaction]
+                })
+
+                expect(blockchain.validTransactionData({chain:newchain.chain})).toBe(true)
+                expect(error).not.toHaveBeenCalled()
+            })
+        })
+
+        describe('transaction data is invalid',()=>{
+            describe('transaction data has multiple rewards',()=>{
+                it('returns false and logs error',()=>{
+                    newchain.addBlock({
+                        data:[transaction,rewardTransaction,rewardTransaction]
+                    })
+                    expect(blockchain.validTransactionData({chain:newchain.chain})).toBe(false)
+                    expect(error).toHaveBeenCalled()
+                })
+            })
+    
+            describe('transaction data has malformed outputMap',()=>{
+                describe('transaction is not reward',()=>{
+                    it('returns false and logs error',()=>{
+                        transaction.outputMap[wallet.publicKey] = 100000
+                        newchain.addBlock({
+                            data:[transaction,rewardTransaction]
+                        })
+                        expect(blockchain.validTransactionData({chain:newchain.chain})).toBe(false)
+                        expect(error).toHaveBeenCalled()
+                    })
+                })
+                describe('transaction is reward',()=>{
+                    it('returns false and logs error',()=>{
+                        rewardTransaction.outputMap[wallet.publicKey] = 1000000
+                        newchain.addBlock({
+                            data:[transaction,rewardTransaction]
+                        })
+                        expect(blockchain.validTransactionData({chain:newchain.chain})).toBe(false)
+                        expect(error).toHaveBeenCalled()
+                    })
+                })
+            })
+            
+            describe('transaction data has malformed input',()=>{
+                it('returns false and logs error',()=>{
+    
+                })
+            })
+    
+            describe('transaction data has multiple same data',()=>{
+                it('returns false and logs error',()=>{
+    
+                })
+            })
+        })
+
+    })
+}) 
