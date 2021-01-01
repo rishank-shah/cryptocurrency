@@ -16,7 +16,7 @@ app.use(bodyparser.json());
 
 
 app.use('/api',blockchainroutes);
-app.use(express.static(path.join(__dirname,'frontend-client')))
+app.use(express.static(path.join(__dirname,'frontend-client/dist')))
 app.use('*',frontendroutes);
 
 let PORT;

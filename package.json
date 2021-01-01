@@ -7,7 +7,8 @@
     "test": "jest --watchAll",
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "peer": "cross-env PEER_PORT='true' nodemon app.js"
+    "peer": "cross-env PEER_PORT='true' nodemon app.js",
+    "build-client": "parcel build frontend-client/src/index.html --out-dir frontend-client/dist"
   },
   "jest": {
     "testEnvironment": "node"
@@ -27,6 +28,9 @@
     "express": "^4.17.1",
     "hex-to-binary": "^1.0.1",
     "morgan": "^1.10.0",
+    "parcel-bundler": "^1.12.4",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "redis": "^3.0.2",
     "request": "^2.88.2",
     "uuid": "^8.3.2"
