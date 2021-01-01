@@ -2,16 +2,22 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan')
 const dotenv = require('dotenv')
-const blockchainroutes = require('./routes/blockchainroutes')
 const bodyparser = require('body-parser')
 const request = require('request')
+const path = require('path')
 const {block_instance,transactionPool_instance} = require("./routes/blockchainroutes")
 dotenv.config()
+
+const blockchainroutes = require('./routes/blockchainroutes')
+const frontendroutes = require('./routes/frontendroutes')
 
 app.use(morgan("dev"));
 app.use(bodyparser.json());
 
-app.use('/',blockchainroutes);
+
+app.use('/api',blockchainroutes);
+app.use(express.static(path.join(__dirname,'frontend-client')))
+app.use('*',frontendroutes);
 
 let PORT;
 if(process.env.PEER_PORT === 'true' ){
