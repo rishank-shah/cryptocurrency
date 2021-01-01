@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --watchAll",
-    "start": "node app.js",
-    "dev": "nodemon app.js",
+    "start": "npm run build-client && node app.js",
+    "dev": "npm run dev-client & nodemon app.js",
     "peer": "cross-env PEER_PORT='true' nodemon app.js",
-    "build-client": "parcel build frontend-client/src/index.html --out-dir frontend-client/dist"
+    "build-client": "npm run clean && parcel build frontend-client/src/index.html --out-dir frontend-client/dist",
+    "dev-client": "npm run clean && parcel frontend-client/src/index.html --out-dir frontend-client/dist",
+    "clean": "rm -rf .cache frontend-client/dist"
   },
   "jest": {
     "testEnvironment": "node"
@@ -22,6 +24,11 @@
     "nodemon": "^2.0.6"
   },
   "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "elliptic": "^6.5.3",
