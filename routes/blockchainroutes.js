@@ -20,6 +20,14 @@ function transactionPool_instance(){
      return transactionPool
 }
 
+function wallet_instance(){ 
+     return wallet
+}
+
+function transactionMiner_instance(){ 
+     return transactionMiner
+}
+
 router.get('/blocks',(_req,res)=>{
      res.json(blockchain.chain);
 });
@@ -89,3 +97,5 @@ router.get('/wallet-info',(req,res)=>{
 module.exports = router
 module.exports.block_instance = block_instance;
 module.exports.transactionPool_instance = transactionPool_instance;
+module.exports.wallet_instance = wallet_instance;
+module.exports.transactionMiner_instance = transactionMiner_instance;

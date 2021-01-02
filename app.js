@@ -5,6 +5,7 @@ const dotenv = require('dotenv')
 const bodyparser = require('body-parser')
 const request = require('request')
 const path = require('path')
+const generateData = require('./development')
 const {block_instance,transactionPool_instance} = require("./routes/blockchainroutes")
 dotenv.config()
 
@@ -14,6 +15,10 @@ const frontendroutes = require('./routes/frontendroutes')
 app.use(morgan("dev"));
 app.use(bodyparser.json());
 
+if (process.env.ENV === 'dev'){
+  console.log('[DEV] Generating Data')
+  generateData()
+} 
 
 app.use('/api',blockchainroutes);
 app.use(express.static(path.join(__dirname,'frontend-client/dist')))
