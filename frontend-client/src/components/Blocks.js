@@ -20,7 +20,7 @@ class Blocks extends Component{
                 <h3>BlockChain</h3>
                 {this.state.blocks.map((block)=>{
                     return(
-                        <div key={block.hash}>
+                        <div key={block.hash} className="block">
                             {block.hash}
                         </div>
                     )

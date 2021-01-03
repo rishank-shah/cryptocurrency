@@ -1,5 +1,6 @@
 import React,{useEffect,useState} from 'react'
 import Blocks from './Blocks'
+import logo from '../assets/logo.svg'
 
 const App = () =>{
     const [balance,setBalance] = useState('Loading...')
@@ -15,10 +16,15 @@ const App = () =>{
     },[])
 
     return(
-        <div>
+        <div className="app">
+            <img className="logo" src={logo}></img>
+            <br/>
             <div>Welcome</div>
-            <div>Address:{address}</div>
-            <div>balance:{balance}</div>
+            <div className="walletInfo">
+                <p>Address:{address}</p>
+                <p>balance:{balance}</p>
+            </div>
+            <br/>
             <Blocks/>
         </div>
     )
