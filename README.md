@@ -1,5 +1,7 @@
 # CryptoCurrency 
 
+### This project is still under development
+
 #### This project is made using Node.js for backend , React.js for frontend and redis for sync of chains.
 
 #### Key features:
