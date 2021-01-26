@@ -1,5 +1,5 @@
 body{
-    background-color:black;
+    background-color: rgb(0, 44, 70);
     color: white;
     text-align: center;
     font-size: 20px;
@@ -9,7 +9,7 @@ body{
 }
 
 .logo{
-    width: 250px;
+    width: auto;
     height: 250px;
 }
 
@@ -18,7 +18,7 @@ body{
 }
 
 .block{
-    border:1px solid #fff;
+    border:1px solid #000;
     padding:5%;
     margin: 2%;
 }
@@ -30,5 +30,5 @@ body{
 }
 
 .Transaction{
-    padding:5%;
+    padding:3%;
 }

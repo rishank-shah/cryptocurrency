@@ -16,8 +16,8 @@ class Block extends Component{
     get displayTrans() {
         const { data } = this.props.block;
         const stringifiedData = JSON.stringify(data);
-        const dataDisplay = stringifiedData.length > 35 ?
-          `${stringifiedData.substring(0, 35)}...` :
+        const dataDisplay = stringifiedData.length > 50 ?
+          `${stringifiedData.substring(0, 50)}...` :
           stringifiedData;
     
         if (this.state.displayTrans) {
@@ -26,15 +26,13 @@ class Block extends Component{
               {
                 data.map(transaction => (
                   <div key={transaction.id}>
-                    <hr />
                     <Transaction transaction={transaction} />
                   </div>
                 ))
               }
               <br />
               <Button
-                bsStyle="danger"
-                bsSize="small"
+                className="btn-danger btn-sm"
                 onClick={this.toggleTrans}
               >
                 Show Less
@@ -47,8 +45,7 @@ class Block extends Component{
           <div>
             <div>Data: {dataDisplay}</div>
             <Button
-              bsStyle="danger"
-              bsSize="small"
+              className="btn-danger btn-sm"
               onClick={this.toggleTrans}
             >
               Show More
@@ -61,7 +58,7 @@ class Block extends Component{
     render(){
         const {timestamp,hash} = this.props.block;
 
-        const hashDisplay = `${hash.substring(0,35)}...`;
+        const hashDisplay = `${hash.substring(0,50)}...`;
 
         return(
             <div className='block'>

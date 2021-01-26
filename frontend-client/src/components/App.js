@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from 'react'
-import Blocks from './Blocks'
-import logo from '../assets/logo.svg'
+import logo from '../assets/logo.png'
+import {Link} from 'react-router-dom'
 
 const App = () =>{
     const [balance,setBalance] = useState('Loading...')
@@ -17,6 +17,7 @@ const App = () =>{
 
     return(
         <div className="app">
+            <Link to='/blocks'>All Blocks</Link>
             <img className="logo" src={logo}></img>
             <br/>
             <div>Welcome</div>
@@ -24,8 +25,6 @@ const App = () =>{
                 <p>Address:{address}</p>
                 <p>balance:{balance}</p>
             </div>
-            <br/>
-            <Blocks/>
         </div>
     )
 }
