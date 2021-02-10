@@ -11,12 +11,23 @@
 * Mining reward
 * Wallets to conduct transactions
 
-### To run this project first start redis server
+### To run this project (dev mode) first start redis server
 ```
-git clone https://github.com/rishank-shah/blockchain.git
-cd blockchain
+https://github.com/rishank-shah/cryptocurrency.git
+cd cryptocurrency
 npm install
-npm run start
+```
+
+### Now create a .env file with the following contents
+```
+DEFAULT_PORT=3000
+ROOT_NODE=http://localhost:3000
+ENV='dev'
+```
+
+### To run project (dev mode)
+```
+npm run dev
 ```
 
 ### For tests
