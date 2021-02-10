@@ -19,7 +19,8 @@ class Blocks extends Component{
     render(){
         return(
             <div>
-                <Link to='/'>Back</Link>
+                <div><Link to='/'>Home Page</Link></div>
+                <div><Link to='/transaction'>Conduct transaction</Link></div>
                 <h3>BlockChain</h3>
                 <div className="ml-5 mr-5">
                     {this.state.blocks.map((block)=>{

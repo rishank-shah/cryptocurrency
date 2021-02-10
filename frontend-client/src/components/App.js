@@ -17,7 +17,9 @@ const App = () =>{
 
     return(
         <div className="app">
-            <Link to='/blocks'>All Blocks</Link>
+            <div><Link to='/blocks'>All Blocks</Link></div>
+            <div><Link to='/transaction'>Conduct transaction</Link></div>
+            <div> <Link to='/transactionpool'>Transaction Pool</Link> </div>
             <img className="logo" src={logo}></img>
             <br/>
             <div>Welcome</div>

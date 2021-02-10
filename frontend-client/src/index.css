@@ -32,3 +32,14 @@ body{
 .Transaction{
     padding:3%;
 }
+
+.conduct{
+    margin-left:20%;
+    margin-right:20%;
+    margin-top: 5%;
+}
+
+.mt{
+    margin-top:25px !important;
+    margin-bottom:25px !important;
+}
