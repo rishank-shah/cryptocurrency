@@ -29,7 +29,7 @@ class ConductTrans extends Component{
 
     conductTransaction = () =>{
         const {receiver,amount} = this.state
-        fetch('http://localhost:3000/api/make-transaction',{
+        fetch(`${document.location.origin}/api/make-transaction`,{
             method:'POST',
             headers:{'Content-Type':'application/json'},
             body: JSON.stringify({

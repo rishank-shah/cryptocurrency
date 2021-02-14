@@ -7,7 +7,7 @@ const App = () =>{
     const [address,setAddress] = useState('Loading...')
 
     useEffect(()=>{
-        fetch('http://localhost:3000/api/wallet-info')
+        fetch(`${document.location.origin}/api/wallet-info`)
         .then((res)=>res.json())
         .then(data=>{
             setAddress(data.address)
