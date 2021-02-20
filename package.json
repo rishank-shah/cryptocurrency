@@ -1,14 +1,14 @@
 {
-  "name": "blockchain",
+  "name": "cryptocurrency",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "preinstall": "npx npm-force-resolutions",
     "test": "jest --watchAll",
-    "start": "npm run build-client && node app.js",
-    "dev": "npm run dev-client & nodemon app.js",
-    "peer": "cross-env PEER_PORT='true' nodemon app.js",
+    "start": "npm run build-client & node app.js",
+    "dev": "npm run dev-client && cross-env ENV='dev' nodemon app.js",
+    "peer": "cross-env PEER_PORT='true' ENV='dev' nodemon app.js",
     "build-client": "npm run clean && parcel build frontend-client/src/index.html --out-dir frontend-client/dist",
     "dev-client": "npm run clean && parcel frontend-client/src/index.html --out-dir frontend-client/dist",
     "clean": "rm -rf .cache frontend-client/dist"

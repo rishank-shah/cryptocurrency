@@ -30,12 +30,10 @@ class Transaction{
         const outputTotal = Object.values(outputMap).reduce((total,outputAmount)=> total+outputAmount);
 
         if(amount !== outputTotal){
-            //console.log(`Invalid transaction from ${address}`)
             return false;
         }
 
         if(!verifySig({publicKey:address,data:outputMap,signature})){
-            //console.log(`Invalid signature from ${address}`)
             return false;
         }
         return true;

@@ -18,7 +18,7 @@ app.use(bodyparser.json());
 if (process.env.ENV === 'dev'){
   console.log('[DEV] Generating Data')
   generateData()
-} 
+}
 
 app.use('/api',blockchainroutes);
 app.use(express.static(path.join(__dirname,'frontend-client/dist')))
@@ -49,7 +49,7 @@ const syncOnConnect = () => {
   })
 }
 
-const port = PORT || process.env.DEFAULT_PORT;
+const port = process.env.PORT || PORT || process.env.DEFAULT_PORT;
 app.listen(port,()=>{
     console.log(`Node JS Api is listening on port : ${port}`);
     if(port !== process.env.DEFAULT_PORT)

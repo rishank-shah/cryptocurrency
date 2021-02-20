@@ -6,10 +6,12 @@ const Pubsub = require('../pubsub/Pubsub')
 const TransactionPool = require('../transaction/TransactionPool')
 const TransactionMiner = require('../transaction/TransactionMiner')
 
+const REDIS_URL = process.env.REDIS_URL
+
 const blockchain = new Blockchain();
 const wallet = new Wallet(); 
 const transactionPool = new TransactionPool();
-const pubsub = new Pubsub({blockchain,transactionPool});
+const pubsub = new Pubsub({blockchain,transactionPool,REDIS_URL});
 const transactionMiner = new TransactionMiner({blockchain,transactionPool,wallet,pubsub})
 
 function block_instance(){ 

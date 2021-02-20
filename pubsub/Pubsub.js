@@ -7,12 +7,12 @@ const CHANNELS = {
 };
 
 class Pubsub{
-    constructor({blockchain,transactionPool}){
+    constructor({blockchain,transactionPool,REDIS_URL}){
         this.blockchain = blockchain
         this.transactionPool = transactionPool
 
-        this.publisher = redis.createClient();
-        this.subscriber = redis.createClient();
+        this.publisher = redis.createClient(REDIS_URL);
+        this.subscriber = redis.createClient(REDIS_URL);
         
         this.subscribe();
         this.subscriber.on('message',(channel,message)=>this.handleMessage(channel,message))
@@ -25,7 +25,6 @@ class Pubsub{
     }
 
     handleMessage(channel,message){
-        //console.log(`Message received. Channel: ${channel}. Message: ${message}`)
         const mes = JSON.parse(message);
 
         switch(channel){
@@ -44,7 +43,6 @@ class Pubsub{
     }
 
     publish({channel,message}){
-        //this is to not send message to same local subscriber
         this.subscriber.unsubscribe(channel,()=>{
             this.publisher.publish(channel,message,()=>{
                 this.subscriber.subscribe(channel);
