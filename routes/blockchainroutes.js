@@ -30,6 +30,23 @@ function transactionMiner_instance(){
      return transactionMiner
 }
 
+router.get('/block/length',(_req,res)=>{
+     res.json({
+          length:blockchain.chain.length
+     })
+})
+
+router.get('/blocks/:pageNumber',(req,res)=>{
+     const { pageNumber } = req.params
+     const length = blockchain.chain.length
+     const reverseBlockchain = blockchain.chain.slice().reverse()
+     let index = (pageNumber - 1) * 5
+     let sIndex = pageNumber * 5;
+     index = index < length ? index : length
+     sIndex = sIndex < length ? sIndex : length
+     res.json(reverseBlockchain.slice(index,sIndex))
+})
+
 router.get('/blocks',(_req,res)=>{
      res.json(blockchain.chain);
 });
@@ -94,6 +111,32 @@ router.get('/wallet-info',(req,res)=>{
                address:wallet.publicKey
           })
      })
+})
+
+router.get('/existing-wallet-address',(req,res)=>{
+     const addMap = {}
+     for(let block of blockchain.chain){
+          for(let transaction of block.data){
+               const receiver = Object.keys(transaction.outputMap)
+               receiver.forEach(receiver => addMap[receiver]=receiver)
+          }
+     }
+     res.json(
+          Object.keys(addMap)
+     )
+})
+
+router.get('/latest-address',(req,res)=>{
+     const addMap = {}
+     const lengthIndex = blockchain.chain.length - 1
+     const block = blockchain.chain[lengthIndex]
+     for(let transaction of block.data){
+          const receiver = Object.keys(transaction.outputMap)
+          receiver.forEach(receiver => addMap[receiver]=receiver)
+     }
+     res.json(
+          Object.keys(addMap)
+     )
 })
 
 module.exports = router

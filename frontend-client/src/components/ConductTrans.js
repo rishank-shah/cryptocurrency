@@ -6,7 +6,17 @@ class ConductTrans extends Component{
     state = {
         receiver:'',
         amount:0,
-        redirect:false
+        redirect:false,
+        latestAddress:[]
+    }
+
+    componentDidMount(){
+        const {receiver,amount} = this.state
+        fetch(`${document.location.origin}/api/latest-address`)
+        .then((res)=>res.json())
+        .then(data=>this.setState({
+            latestAddress:data
+        }))
     }
 
     setAmount = e =>{
@@ -68,6 +78,18 @@ class ConductTrans extends Component{
                 <div>
                     <Button variant="danger" onClick={this.conductTransaction} >Submit</Button>
                 </div>
+                <hr/>
+                <h4>Latest Wallet Address</h4>
+                {this.state.latestAddress.map(address=>{
+                    return(
+                        <div key={address}>
+                            <div>
+                                {address==='undefined' ? '':address }
+                            </div>
+                            <br/>
+                        </div>
+                    )
+                })}
             </div>
         )
     }

@@ -1,20 +1,31 @@
 import React,{Component} from 'react'
 import Block from './Block'
 import {Link} from 'react-router-dom'
+import {Button} from 'react-bootstrap'
 
 class Blocks extends Component{
     state = {
-        blocks:[]
+        blocks:[],
+        pageNumber: 1,
+        totalLength:0
     }
 
     componentDidMount(){
-        fetch(`${document.location.origin}/api/blocks`)
+        fetch(`${document.location.origin}/api/block/length`)
+        .then((res)=>res.json())
+        .then(data=>{
+            this.setState({totalLength:data.length})
+        })
+        this.pageNumberBlocks(this.state.pageNumber)
+    }
+
+    pageNumberBlocks = number =>{
+        fetch(`${document.location.origin}/api/blocks/${number}`)
         .then((res)=>res.json())
         .then(data=>{
             this.setState({blocks:data})
         })
     }
-
 
     render(){
         return(
@@ -28,6 +39,18 @@ class Blocks extends Component{
                         <Block key ={block.hash} block={block} />
                     )
                 })}
+                </div>
+                <div>
+                    {
+                       [...Array(Math.ceil(this.state.totalLength/5)).keys()].map(key=>{
+                           const id = key+1;
+                           return (
+                                <span key={key} onClick={()=>this.pageNumberBlocks(id)} >
+                                    <Button variant="danger" size="small">{id}</Button>{' '}
+                                </span>
+                           )
+                       })
+                    }
                 </div>
             </div>
         )
